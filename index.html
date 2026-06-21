@@ -691,6 +691,136 @@
     letter-spacing: 0.06em;
   }
 
+  .design-gallery {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .design-slider {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .design-slider::-webkit-scrollbar { display: none; }
+  .design-card {
+    min-width: 280px;
+    flex: 0 0 280px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    overflow: hidden;
+    scroll-snap-align: center;
+    cursor: pointer;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+  }
+  .design-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  }
+  .design-card-preview {
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--surface) 0%, var(--bg3) 100%);
+  }
+  .design-card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.15);
+  }
+  .design-card-content {
+    padding: 20px;
+  }
+  .design-card-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--accent2);
+    margin-bottom: 10px;
+  }
+  .design-card-title {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .gallery-nav {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid var(--border2);
+    background: rgba(13,17,23,0.85);
+    color: var(--text);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: transform 0.2s, border-color 0.2s, background 0.2s;
+  }
+  .gallery-nav:hover {
+    transform: scale(1.05);
+    border-color: var(--accent);
+    background: rgba(0,0,0,0.95);
+  }
+  .design-lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(8,12,16,0.95);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: 2100;
+  }
+  .design-lightbox.open {
+    display: flex;
+  }
+  .lightbox-inner {
+    max-width: 100%;
+    width: min(1080px, 100%);
+    text-align: center;
+  }
+  .lightbox-inner img {
+    width: 100%;
+    max-height: calc(100vh - 180px);
+    object-fit: contain;
+    border: 1px solid var(--border2);
+    border-radius: 16px;
+  }
+  .lightbox-caption {
+    margin-top: 16px;
+    color: var(--text2);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--border2);
+    border-radius: 50%;
+    background: rgba(13,17,23,0.85);
+    color: var(--text);
+    font-size: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
   /* HOW I WORK */
   #process { padding: 28px 0; }
 
@@ -1088,6 +1218,10 @@
     /* PROJECTS */
     .projects-grid { grid-template-columns: 1fr; gap: 20px; }
     .project-preview { height: 180px; }
+    .design-gallery { flex-direction: column; align-items: stretch; gap: 18px; }
+    .design-slider { width: 100%; }
+    .design-card { min-width: auto; width: 100%; }
+    .gallery-nav { width: 100%; max-width: 160px; margin: 0 auto; }
     /* Always show overlay buttons on mobile (no hover) */
     .preview-overlay {
       opacity: 1;
@@ -1521,47 +1655,48 @@
     <span class="section-num">//visual.work</span>
   </div>
 
-  <h2 class="section-title reveal">Graphic <span class="accent">Design</span></h2>
-  <p class="section-sub reveal">Visual work and brand assets that complement polished digital experiences.</p>
+  <h2 class="section-title reveal">Graphic Design</h2>
+  <p class="section-sub reveal">A clickable portfolio gallery for design work — slide through each piece on desktop or mobile.</p>
 
-  <div class="projects-grid">
-    <div class="project-card reveal">
-      <div class="project-preview">
-        <div class="project-preview-placeholder">
-          <i data-lucide="pen-tool" width="40" height="40" class="preview-icon"></i>
-          <span class="preview-label">// Brand Systems</span>
+  <div class="design-gallery reveal">
+    <button class="gallery-nav prev" type="button" aria-label="Scroll left">‹</button>
+    <div class="design-slider">
+      <article class="design-card" data-image="image/design-brand-system.jpg" data-title="Brand identity system">
+        <div class="design-card-preview">
+          <span class="design-card-icon"><i data-lucide="pen-tool" width="26" height="26"></i></span>
         </div>
-      </div>
-      <div class="project-body">
-        <div class="project-type">Brand Identity · Visual Systems</div>
-        <div class="project-title">Logo, visual identity, and asset library for premium digital brands.</div>
-        <div class="project-desc">Design systems built for consistency across web, social, and print — crafted with strong typography, color, and motion-ready layouts.</div>
-        <div class="project-stack">
-          <span class="stack-tag">Figma</span>
-          <span class="stack-tag">Adobe Photoshop</span>
-          <span class="stack-tag">Brand Guidelines</span>
-          <span class="stack-tag">Creative Direction</span>
+        <div class="design-card-content">
+          <div class="design-card-label">// Brand Systems</div>
+          <div class="design-card-title">Logo and identity layouts designed for digital-first brands.</div>
         </div>
-      </div>
+      </article>
+      <article class="design-card" data-image="image/design-campaign-assets.jpg" data-title="Campaign assets">
+        <div class="design-card-preview">
+          <span class="design-card-icon"><i data-lucide="layout" width="26" height="26"></i></span>
+        </div>
+        <div class="design-card-content">
+          <div class="design-card-label">// Campaign Assets</div>
+          <div class="design-card-title">Swipeable visual campaigns, social posts, and launch materials.</div>
+        </div>
+      </article>
+      <article class="design-card" data-image="image/design-poster-series.jpg" data-title="Visual gallery">
+        <div class="design-card-preview">
+          <span class="design-card-icon"><i data-lucide="image" width="26" height="26"></i></span>
+        </div>
+        <div class="design-card-content">
+          <div class="design-card-label">// Visual Gallery</div>
+          <div class="design-card-title">Clickable artwork previews for posters and branding concepts.</div>
+        </div>
+      </article>
     </div>
-    <div class="project-card reveal">
-      <div class="project-preview">
-        <div class="project-preview-placeholder">
-          <i data-lucide="layout" width="40" height="40" class="preview-icon"></i>
-          <span class="preview-label">// Campaign Assets</span>
-        </div>
-      </div>
-      <div class="project-body">
-        <div class="project-type">Marketing Design · Launch Collateral</div>
-        <div class="project-title">Visual campaigns, social assets, and presentation templates.</div>
-        <div class="project-desc">Custom marketing visuals created for product launches, events, and digital storytelling with a polished, modern aesthetic.</div>
-        <div class="project-stack">
-          <span class="stack-tag">Adobe Illustrator</span>
-          <span class="stack-tag">Layout Design</span>
-          <span class="stack-tag">Digital Asset Kits</span>
-          <span class="stack-tag">Creative Campaigns</span>
-        </div>
-      </div>
+    <button class="gallery-nav next" type="button" aria-label="Scroll right">›</button>
+  </div>
+
+  <div class="design-lightbox" id="designLightbox" role="dialog" aria-modal="true" aria-hidden="true">
+    <button class="lightbox-close" type="button" aria-label="Close preview">×</button>
+    <div class="lightbox-inner">
+      <img id="lightboxImage" alt="Design preview">
+      <div class="lightbox-caption" id="lightboxCaption"></div>
     </div>
   </div>
 </section>
@@ -1905,6 +2040,53 @@
       lucide.createIcons();
     }, 3000);
   }
+
+  // Design gallery controls and preview
+  const designSlider = document.querySelector('.design-slider');
+  const designCards = document.querySelectorAll('.design-card');
+  const lightbox = document.getElementById('designLightbox');
+  const lightboxImage = document.getElementById('lightboxImage');
+  const lightboxCaption = document.getElementById('lightboxCaption');
+  const lightboxClose = document.querySelector('.lightbox-close');
+
+  function openDesignPreview(card) {
+    const image = card.dataset.image;
+    const title = card.dataset.title;
+    if (!image) return;
+    lightboxImage.src = image;
+    lightboxImage.alt = title;
+    lightboxCaption.textContent = title;
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDesignPreview() {
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelector('.gallery-nav.prev').addEventListener('click', () => {
+    designSlider.scrollBy({ left: -320, behavior: 'smooth' });
+  });
+  document.querySelector('.gallery-nav.next').addEventListener('click', () => {
+    designSlider.scrollBy({ left: 320, behavior: 'smooth' });
+  });
+
+  designCards.forEach(card => {
+    card.addEventListener('click', () => openDesignPreview(card));
+  });
+
+  lightboxClose.addEventListener('click', closeDesignPreview);
+  lightbox.addEventListener('click', event => {
+    if (event.target === lightbox) closeDesignPreview();
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && lightbox.classList.contains('open')) {
+      closeDesignPreview();
+    }
+  });
 
   // Glitch on hero name hover
   const heroName = document.querySelector('.hero-name .line2');
